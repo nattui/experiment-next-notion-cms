@@ -1,4 +1,5 @@
 import { Spacer } from "@nattui/react-components"
+import type { JSX } from "react"
 import { highlight } from "sugar-high"
 import { NotionRichTextSegments } from "@/app/(home)/notion-rich-text-segments"
 import type { NotionBlock } from "@/lib/notion"
@@ -8,7 +9,7 @@ interface NotionBlockContentProps {
   blockIndex: number
 }
 
-export function NotionBlockContent(props: NotionBlockContentProps) {
+export function NotionBlockContent(props: NotionBlockContentProps): JSX.Element {
   const { block, blockIndex } = props
 
   if (block.type === "h2") {
