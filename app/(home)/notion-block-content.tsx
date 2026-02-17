@@ -54,7 +54,7 @@ export async function NotionBlockContent(props: NotionBlockContentProps): Promis
       <>
         {/* Notion serves image URLs from varying hosts, so render a plain image tag. */}
         {/* oxlint-disable-next-line @next/next/no-img-element */}
-        <img alt={block.alt} className="h-auto w-full" loading="lazy" src={block.url} />
+        <img alt={block.alt} className="rounded-12 h-auto w-full" loading="lazy" src={block.url} />
         <Spacer className="h-24" />
       </>
     )
@@ -66,8 +66,8 @@ export async function NotionBlockContent(props: NotionBlockContentProps): Promis
     if (mappedComponentElements) {
       return (
         <>
-          <div className="rounded-8 bg-gray-3 flex justify-center p-16">
-            <div className="flex flex-col gap-16">{mappedComponentElements}</div>
+          <div className="rounded-12 bg-gray-2 border-gray-4 flex flex-wrap justify-center gap-16 border p-16">
+            {mappedComponentElements}
           </div>
           <Spacer className="h-24" />
         </>
@@ -78,7 +78,7 @@ export async function NotionBlockContent(props: NotionBlockContentProps): Promis
 
     return (
       <>
-        <pre className="rounded-8 bg-gray-3 text-13 overflow-x-auto p-16 whitespace-break-spaces">
+        <pre className="rounded-12 bg-gray-2 border-gray-4 text-13 overflow-x-auto border p-16 whitespace-break-spaces">
           <code aria-label={block.language} dangerouslySetInnerHTML={{ __html: codeHTML }} />
         </pre>
         <Spacer className="h-24" />
@@ -90,7 +90,8 @@ export async function NotionBlockContent(props: NotionBlockContentProps): Promis
 }
 
 const COMPONENT_MARKER = "// component"
-const componentMap: Record<string, ElementType> = {
+
+const components: Record<string, ElementType> = {
   Button,
   Input,
   Spacer,
@@ -98,6 +99,7 @@ const componentMap: Record<string, ElementType> = {
 
 async function renderMappedComponents(code: string): Promise<JSX.Element | undefined> {
   const trimmedCode = code.trim()
+
   if (!trimmedCode.startsWith(COMPONENT_MARKER)) {
     return
   }
@@ -115,7 +117,7 @@ async function renderMappedComponents(code: string): Promise<JSX.Element | undef
       jsxs,
     })
     const MdxContent = evaluated.default
-    return <MdxContent components={componentMap} />
+    return <MdxContent components={components} />
   } catch {
     // Invalid component markup falls back to the highlighted code block renderer.
   }
