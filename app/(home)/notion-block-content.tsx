@@ -1,5 +1,5 @@
 import { evaluate } from "@mdx-js/mdx"
-import { Button, Input, Spacer, Switch } from "@nattui/react-components"
+import { Button, Input, Label, Spacer, Switch, Textarea } from "@nattui/react-components"
 import type { ElementType, JSX } from "react"
 import { Fragment, jsx, jsxs } from "react/jsx-runtime"
 import { highlight } from "sugar-high"
@@ -94,8 +94,10 @@ const COMPONENT_MARKER = "// component"
 const components: Record<string, ElementType> = {
   Button,
   Input,
+  Label,
   Spacer,
   Switch,
+  Textarea,
 }
 
 async function renderMappedComponents(code: string): Promise<JSX.Element | undefined> {
