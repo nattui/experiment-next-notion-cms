@@ -2,9 +2,7 @@ import { Client } from "@notionhq/client"
 
 const { NOTION_API_KEY, NOTION_PAGE_ID } = process.env
 
-const notion = new Client({
-  auth: NOTION_API_KEY,
-})
+export const notion = new Client({ auth: NOTION_API_KEY })
 
 export async function getNotionPage(): Promise<string[]> {
   if (!NOTION_API_KEY || !NOTION_PAGE_ID) {
