@@ -14,13 +14,10 @@ export function NotionBlockContent(props: NotionBlockContentProps) {
     return (
       <>
         <Spacer className="h-24" />
-        <h2 className="text-30 font-500 leading-[1.3]">
-          <NotionRichTextSegments
-            blockIndex={blockIndex}
-            segments={block.segments}
-          />
+        <h2 className="text-24 font-500 leading-[1.3]">
+          <NotionRichTextSegments blockIndex={blockIndex} segments={block.segments} />
         </h2>
-        <Spacer className="h-24" />
+        <Spacer className="h-12" />
       </>
     )
   }
@@ -29,13 +26,10 @@ export function NotionBlockContent(props: NotionBlockContentProps) {
     return (
       <>
         <Spacer className="h-24" />
-        <h3 className="text-24 font-500 leading-[1.4]">
-          <NotionRichTextSegments
-            blockIndex={blockIndex}
-            segments={block.segments}
-          />
+        <h3 className="text-20 font-500 leading-[1.4]">
+          <NotionRichTextSegments blockIndex={blockIndex} segments={block.segments} />
         </h3>
-        <Spacer className="h-24" />
+        <Spacer className="h-12" />
       </>
     )
   }
