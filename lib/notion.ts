@@ -73,12 +73,9 @@ export async function getNotionPage(): Promise<NotionPage> {
       return DEFAULT_EMPTY
     }
 
-    console.log(result.type)
-
     if (result.type === "paragraph") {
       const richText = result.paragraph.rich_text
       if (richText.length > 0) {
-        console.log(richText)
         const segments = richText.map((textBlock) => ({
           bold: textBlock.annotations.bold,
           code: textBlock.annotations.code,
