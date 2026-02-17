@@ -22,6 +22,7 @@ export type NotionBlock =
 
 export interface NotionPage {
   blocks: NotionBlock[]
+  createdTime: string
   title: string
 }
 
@@ -42,6 +43,7 @@ export async function getNotionPage(): Promise<NotionPage> {
 
   const DEFAULT_EMPTY = {
     blocks: [],
+    createdTime: "",
     title: "",
   }
 
@@ -141,6 +143,7 @@ export async function getNotionPage(): Promise<NotionPage> {
 
   return {
     blocks,
+    createdTime: metaPage.created_time,
     title,
   }
 }
