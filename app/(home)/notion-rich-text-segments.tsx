@@ -1,3 +1,4 @@
+import type { ReactNode } from "react"
 import type { NotionRichTextSegment } from "@/lib/notion"
 
 interface NotionRichTextSegmentsProps {
@@ -9,11 +10,13 @@ export function NotionRichTextSegments(props: NotionRichTextSegmentsProps) {
   const { blockIndex, segments } = props
 
   return segments.map((segment, segmentIndex) => {
-    let segmentContent = segment.code ? (
-      <code className="rounded-4 bg-gray-3 text-14 px-4 py-2">{segment.text}</code>
-    ) : (
-      segment.text
-    )
+    let segmentContent: ReactNode = segment.text
+
+    if (segment.code) {
+      segmentContent = (
+        <code className="rounded-4 bg-gray-3 text-14 px-4 py-2">{segmentContent}</code>
+      )
+    }
 
     if (segment.bold) {
       segmentContent = <strong>{segmentContent}</strong>
