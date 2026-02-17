@@ -1,16 +1,21 @@
 import type { Metadata } from "next"
-import { Geist as sans, Geist_Mono as mono } from "next/font/google"
+import { Inter as sans, Google_Sans as display, JetBrains_Mono as mono } from "next/font/google"
 import type { PropsWithChildren } from "react"
 import "@/styles/global.css"
 
-const geistSans = sans({
+const fontDisplay = display({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-display",
 })
 
-const geistMono = mono({
+const fontMono = mono({
   subsets: ["latin"],
   variable: "--font-mono",
+})
+
+const fontSans = sans({
+  subsets: ["latin"],
+  variable: "--font-sans",
 })
 
 export default function RootLayout(props: PropsWithChildren) {
@@ -19,7 +24,7 @@ export default function RootLayout(props: PropsWithChildren) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} color-gray-mauve color-primary-crimson dark`}
+        className={`${fontDisplay.variable} ${fontMono.variable} ${fontSans.variable} color-gray-mauve color-primary-crimson dark`}
       >
         {children}
       </body>

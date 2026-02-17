@@ -50,6 +50,7 @@
   p {
     font-size: 1.6rem;
     word-break: break-word;
+    letter-spacing: -0.02em;
   }
 
   b,
