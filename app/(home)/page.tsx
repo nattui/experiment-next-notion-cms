@@ -9,7 +9,7 @@ export default async function HomePage() {
     <div className="flex flex-col px-16">
       <Spacer className="h-64" />
 
-      <div className="mx-auto flex max-w-[640px] flex-col">
+      <div className="mx-auto flex max-w-[620px] flex-col">
         {/* Title */}
         <h1 className="text-36 font-500 leading-[1.2]">{title}</h1>
         <Spacer className="h-24" />

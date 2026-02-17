@@ -12,7 +12,7 @@ export function NotionRichTextSegments(props: NotionRichTextSegmentsProps) {
     if (segment.href) {
       return (
         <a
-          className="text-primary-9 underline hover:no-underline"
+          className="decoration-gray-9 underline decoration-1 underline-offset-2 hover:no-underline"
           href={segment.href}
           key={`${blockIndex}-${segmentIndex}`}
           rel="noreferrer"
