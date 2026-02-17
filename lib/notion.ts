@@ -5,8 +5,17 @@ const { NOTION_API_KEY, NOTION_PAGE_ID } = process.env
 export const notion = new Client({ auth: NOTION_API_KEY })
 
 interface NotionPage {
-  blocks: string[]
+  blocks: NotionParagraph[]
   title: string
+}
+
+interface NotionParagraph {
+  segments: NotionRichTextSegment[]
+}
+
+interface NotionRichTextSegment {
+  href: null | string
+  text: string
 }
 
 export async function getNotionPage(): Promise<NotionPage> {
@@ -40,7 +49,7 @@ export async function getNotionPage(): Promise<NotionPage> {
     title = titleArray[0].plain_text
   }
 
-  const blocks: string[] = []
+  const blocks: NotionParagraph[] = []
 
   for (const result of metaContent.results) {
     if (!("type" in result)) {
@@ -50,8 +59,11 @@ export async function getNotionPage(): Promise<NotionPage> {
     if (result.type === "paragraph") {
       const richText = result.paragraph.rich_text
       if (richText.length > 0) {
-        const content = richText[0].plain_text
-        blocks.push(content)
+        const segments = richText.map((textBlock) => ({
+          href: textBlock.href,
+          text: textBlock.plain_text,
+        }))
+        blocks.push({ segments })
       }
     }
   }

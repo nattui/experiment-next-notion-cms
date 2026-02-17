@@ -17,7 +17,23 @@ export default async function HomePage() {
         {/* Content */}
         {blocks.map((block, index) => (
           <Fragment key={index}>
-            <p className="text-16 leading-[1.825]">{block}</p>
+            <p className="text-16 leading-[1.825]">
+              {block.segments.map((segment, segmentIndex) =>
+                segment.href ? (
+                  <a
+                    className="underline"
+                    href={segment.href}
+                    key={segmentIndex}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {segment.text}
+                  </a>
+                ) : (
+                  <span key={segmentIndex}>{segment.text}</span>
+                ),
+              )}
+            </p>
             <Spacer className="h-24" />
           </Fragment>
         ))}
