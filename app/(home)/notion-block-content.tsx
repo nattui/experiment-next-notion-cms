@@ -71,6 +71,5 @@ export function NotionBlockContent(props: NotionBlockContentProps): JSX.Element 
     )
   }
 
-  // oxlint-disable-next-line react/jsx-no-useless-fragment
   return <></>
 }

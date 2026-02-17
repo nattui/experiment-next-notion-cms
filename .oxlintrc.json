@@ -43,6 +43,7 @@
     "eslint-plugin-react/button-has-type": "allow",
     "eslint-plugin-react/jsx-filename-extension": "allow",
     "eslint-plugin-react/jsx-max-depth": "allow",
+    "eslint-plugin-react/jsx-no-useless-fragment": "allow",
     "eslint-plugin-react/jsx-props-no-spreading": "allow",
     "eslint-plugin-react/no-array-index-key": "allow",
     "eslint-plugin-react/no-danger": "allow",
