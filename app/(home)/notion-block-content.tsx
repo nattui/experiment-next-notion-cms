@@ -1,5 +1,7 @@
-import { Button, Spacer } from "@nattui/react-components"
-import { createElement, type JSX } from "react"
+import { evaluate } from "@mdx-js/mdx"
+import { Button, Input, Spacer } from "@nattui/react-components"
+import type { ElementType, JSX } from "react"
+import { Fragment, jsx, jsxs } from "react/jsx-runtime"
 import { highlight } from "sugar-high"
 import { NotionRichTextSegments } from "@/app/(home)/notion-rich-text-segments"
 import type { NotionBlock } from "@/lib/notion"
@@ -9,12 +11,7 @@ interface NotionBlockContentProps {
   blockIndex: number
 }
 
-const COMPONENT_MARKER = "// component"
-const componentMap = {
-  Button,
-} as const
-
-export function NotionBlockContent(props: NotionBlockContentProps): JSX.Element {
+export async function NotionBlockContent(props: NotionBlockContentProps): Promise<JSX.Element> {
   const { block, blockIndex } = props
 
   if (block.type === "h2") {
@@ -64,7 +61,7 @@ export function NotionBlockContent(props: NotionBlockContentProps): JSX.Element 
   }
 
   if (block.type === "code") {
-    const mappedComponentElements = renderMappedComponents(block.code)
+    const mappedComponentElements = await renderMappedComponents(block.code)
     if (mappedComponentElements) {
       return (
         <>
@@ -91,50 +88,34 @@ export function NotionBlockContent(props: NotionBlockContentProps): JSX.Element 
   return <></>
 }
 
-function renderMappedComponents(code: string): JSX.Element | undefined {
+const COMPONENT_MARKER = "// component"
+const componentMap: Record<string, ElementType> = {
+  Button,
+  Input,
+  Spacer,
+}
+
+async function renderMappedComponents(code: string): Promise<JSX.Element | undefined> {
   const trimmedCode = code.trim()
   if (!trimmedCode.startsWith(COMPONENT_MARKER)) {
     return
   }
 
-  const componentMarkup = trimmedCode.slice(COMPONENT_MARKER.length).trim()
-  if (!componentMarkup) {
+  const mdxSource = trimmedCode.slice(COMPONENT_MARKER.length).trim()
+  if (!mdxSource) {
     return
   }
 
-  const componentLines = componentMarkup
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-
-  if (componentLines.length === 0) {
-    return
+  try {
+    const evaluated = await evaluate(mdxSource, {
+      Fragment,
+      development: false,
+      jsx,
+      jsxs,
+    })
+    const MdxContent = evaluated.default
+    return <MdxContent components={componentMap} />
+  } catch {
+    // Invalid component markup falls back to the highlighted code block renderer.
   }
-
-  const renderedElements: JSX.Element[] = []
-
-  for (const [index, line] of componentLines.entries()) {
-    const pairedTagMatch = line.match(/^<([A-Z][\w]*)>([\s\S]*)<\/\1>$/)
-    if (pairedTagMatch) {
-      const [, componentName, children] = pairedTagMatch
-      const Component = componentMap[componentName as keyof typeof componentMap]
-      if (Component) {
-        renderedElements.push(createElement(Component, { key: `${componentName}-${index}` }, children))
-      }
-    } else {
-      const selfClosingTagMatch = line.match(/^<([A-Z][\w]*)\s*\/>$/)
-      if (selfClosingTagMatch) {
-        const [, componentName] = selfClosingTagMatch
-        const Component = componentMap[componentName as keyof typeof componentMap]
-        if (Component) {
-          renderedElements.push(createElement(Component, { key: `${componentName}-${index}` }))
-        }
-      }
-    }
-  }
-  if (renderedElements.length !== componentLines.length) {
-    return
-  }
-
-  return <>{renderedElements}</>
 }
