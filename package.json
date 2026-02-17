@@ -3,25 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
+    "check": "bun run check:format && bun run check:lint",
+    "check:fix": "bun run check:format:fix && bun run check:lint:fix",
+    "check:format": "oxfmt --check",
+    "check:format:fix": "oxfmt",
+    "check:lint": "oxlint",
+    "check:lint:fix": "oxlint --fix --fix-suggestions --fix-dangerously",
+    "dev": "next dev",
     "start": "next start",
-    "lint": "eslint"
+    "update": "bun update --interactive --recursive"
   },
   "dependencies": {
+    "@base-ui/react": "1.2.0",
+    "@nattui/react-components": "0.0.40",
+    "@nattui/tailwind-colors": "0.0.8",
+    "@nattui/tailwind-exact": "0.0.5",
+    "lucide-react": "0.566.0",
     "next": "16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@tailwindcss/postcss": "4.1.18",
+    "@types/node": "25.2.3",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "eslint-plugin-perfectionist": "5.5.0",
+    "oxfmt": "0.33.0",
+    "oxlint": "1.47.0",
+    "tailwindcss": "4.1.18",
+    "typescript": "5.9.3"
   },
   "ignoreScripts": [
     "sharp",

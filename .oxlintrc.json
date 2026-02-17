@@ -1,0 +1,121 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "eslint",
+    "import",
+    "jsdoc",
+    "jsx-a11y",
+    "nextjs",
+    "oxc",
+    "react",
+    "react-perf",
+    "typescript",
+    "unicorn"
+  ],
+  "jsPlugins": [
+    {
+      "name": "perfectionist",
+      "specifier": "eslint-plugin-perfectionist"
+    }
+  ],
+  "categories": {
+    "correctness": "error",
+    "nursery": "error",
+    "pedantic": "error",
+    "perf": "error",
+    "restriction": "error",
+    "style": "error",
+    "suspicious": "error"
+  },
+  "rules": {
+    "eslint-plugin-import/consistent-type-specifier-style": "allow",
+    "eslint-plugin-import/exports-last": "allow",
+    "eslint-plugin-import/group-exports": "allow",
+    "eslint-plugin-import/no-default-export": "allow",
+    "eslint-plugin-import/no-named-export": "allow",
+    "eslint-plugin-import/no-unassigned-import": "allow",
+    "eslint-plugin-import/prefer-default-export": "allow",
+    "eslint-plugin-import/unambiguous": "allow",
+    "eslint-plugin-react-perf/jsx-no-jsx-as-prop": "allow",
+    "eslint-plugin-react-perf/jsx-no-new-array-as-prop": "allow",
+    "eslint-plugin-react-perf/jsx-no-new-function-as-prop": "allow",
+    "eslint-plugin-react-perf/jsx-no-new-object-as-prop": "allow",
+    "eslint-plugin-react/button-has-type": "allow",
+    "eslint-plugin-react/jsx-filename-extension": "allow",
+    "eslint-plugin-react/jsx-max-depth": "allow",
+    "eslint-plugin-react/jsx-props-no-spreading": "allow",
+    "eslint-plugin-react/no-array-index-key": "allow",
+    "eslint-plugin-react/only-export-components": "allow",
+    "eslint-plugin-react/react-in-jsx-scope": "allow",
+    "eslint-plugin-unicorn/consistent-function-scoping": "allow",
+    "eslint-plugin-unicorn/no-nested-ternary": "allow",
+    "eslint/complexity": "allow",
+    "eslint/func-style": ["error", "declaration"],
+    "eslint/id-length": ["error", { "exceptions": ["_"] }],
+    "eslint/max-lines-per-function": "allow",
+    "eslint/no-inline-comments": "allow",
+    "eslint/no-magic-numbers": "allow",
+    "eslint/no-nested-ternary": "allow",
+    "eslint/no-ternary": "allow",
+    "eslint/no-undefined": "allow",
+    "eslint/sort-imports": "allow",
+    "oxc/no-rest-spread-properties": "allow",
+    "perfectionist/sort-array-includes": "error",
+    "perfectionist/sort-classes": "error",
+    "perfectionist/sort-decorators": "error",
+    "perfectionist/sort-enums": "error",
+    "perfectionist/sort-export-attributes": "error",
+    "perfectionist/sort-exports": "error",
+    "perfectionist/sort-heritage-clauses": "error",
+    "perfectionist/sort-interfaces": "error",
+    "perfectionist/sort-intersection-types": "error",
+    "perfectionist/sort-jsx-props": "error",
+    "perfectionist/sort-maps": "error",
+    "perfectionist/sort-modules": "error",
+    "perfectionist/sort-named-exports": "error",
+    "perfectionist/sort-object-types": "error",
+    "perfectionist/sort-sets": "error",
+    "perfectionist/sort-switch-case": "error",
+    "perfectionist/sort-union-types": "error",
+    "perfectionist/sort-variable-declarations": "error",
+    "typescript/explicit-function-return-type": "allow",
+    "typescript/explicit-module-boundary-types": "allow",
+    "typescript/no-empty-interface": "allow",
+    "typescript/no-empty-object-type": "allow",
+    "typescript/no-use-before-define": "allow"
+  },
+  "settings": {
+    "jsx-a11y": {
+      "polymorphicPropName": null,
+      "components": {},
+      "attributes": {}
+    },
+    "next": {
+      "rootDir": []
+    },
+    "react": {
+      "formComponents": [],
+      "linkComponents": [],
+      "version": null,
+      "componentWrapperFunctions": []
+    },
+    "jsdoc": {
+      "ignorePrivate": false,
+      "ignoreInternal": false,
+      "ignoreReplacesDocs": true,
+      "overrideReplacesDocs": true,
+      "augmentsExtendsReplacesDocs": false,
+      "implementsReplacesDocs": false,
+      "exemptDestructuredRootsFromChecks": false,
+      "tagNamePreference": {}
+    },
+    "vitest": {
+      "typecheck": false
+    }
+  },
+  "env": {
+    "builtin": true
+  },
+  "globals": {},
+  "ignorePatterns": []
+}
