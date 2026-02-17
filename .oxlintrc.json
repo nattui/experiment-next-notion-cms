@@ -59,6 +59,7 @@
     "eslint/no-ternary": "allow",
     "eslint/no-undefined": "allow",
     "eslint/sort-imports": "allow",
+    "max-statements": "allow",
     "no-console": "allow",
     "no-undef": "allow",
     "oxc/no-async-await": "allow",
