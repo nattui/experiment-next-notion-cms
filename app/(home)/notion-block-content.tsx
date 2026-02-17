@@ -62,10 +62,11 @@ export async function NotionBlockContent(props: NotionBlockContentProps): Promis
 
   if (block.type === "code") {
     const mappedComponentElements = await renderMappedComponents(block.code)
+
     if (mappedComponentElements) {
       return (
         <>
-          <div className="rounded-8 bg-gray-3 p-16">
+          <div className="rounded-8 bg-gray-3 flex justify-center p-16">
             <div className="flex flex-col gap-16">{mappedComponentElements}</div>
           </div>
           <Spacer className="h-24" />
