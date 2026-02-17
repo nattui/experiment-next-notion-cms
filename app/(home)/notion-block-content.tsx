@@ -34,12 +34,25 @@ export function NotionBlockContent(props: NotionBlockContentProps) {
     )
   }
 
-  return (
-    <>
-      <p className="text-gray-12 text-16 leading-1-625">
-        <NotionRichTextSegments blockIndex={blockIndex} segments={block.segments} />
-      </p>
-      <Spacer className="h-24" />
-    </>
-  )
+  if (block.type === "paragraph") {
+    return (
+      <>
+        <p className="text-gray-12 text-16 leading-1-625">
+          <NotionRichTextSegments blockIndex={blockIndex} segments={block.segments} />
+        </p>
+        <Spacer className="h-24" />
+      </>
+    )
+  }
+
+  if (block.type === "image") {
+    return (
+      <>
+        {/* Notion serves image URLs from varying hosts, so render a plain image tag. */}
+        {/* oxlint-disable-next-line @next/next/no-img-element */}
+        <img alt={block.alt} className="h-auto w-full" loading="lazy" src={block.url} />
+        <Spacer className="h-24" />
+      </>
+    )
+  }
 }

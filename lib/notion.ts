@@ -4,10 +4,16 @@ const { NOTION_API_KEY, NOTION_PAGE_ID } = process.env
 
 export const notion = new Client({ auth: NOTION_API_KEY })
 
-export interface NotionBlock {
-  segments: NotionRichTextSegment[]
-  type: "h2" | "h3" | "paragraph"
-}
+export type NotionBlock =
+  | {
+      alt: string
+      type: "image"
+      url: string
+    }
+  | {
+      segments: NotionRichTextSegment[]
+      type: "h2" | "h3" | "paragraph"
+    }
 
 export interface NotionPage {
   blocks: NotionBlock[]
@@ -89,6 +95,15 @@ export async function getNotionPage(): Promise<NotionPage> {
         }))
         blocks.push({ segments, type: "h3" })
       }
+    }
+
+    if (result.type === "image") {
+      const url =
+        result.image.type === "external" ? result.image.external.url : result.image.file.url
+
+      const alt = result.image.caption.map((textBlock) => textBlock.plain_text).join("")
+
+      blocks.push({ alt, type: "image", url })
     }
   }
 
