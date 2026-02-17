@@ -17,11 +17,11 @@
     "@nattui/react-components": "0.0.40",
     "@nattui/tailwind-colors": "0.0.8",
     "@nattui/tailwind-exact": "0.0.5",
+    "@notionhq/client": "5.9.0",
     "lucide-react": "0.566.0",
     "next": "16.1.6",
     "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "react-notion-x": "7.8.1"
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.1.18",

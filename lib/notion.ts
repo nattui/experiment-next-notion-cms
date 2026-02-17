@@ -4,16 +4,17 @@ const { NOTION_API_KEY, NOTION_PAGE_ID } = process.env
 
 export const notion = new Client({ auth: NOTION_API_KEY })
 
-interface NotionPage {
-  blocks: NotionParagraph[]
+export interface NotionBlock {
+  segments: NotionRichTextSegment[]
+  type: "h2" | "h3" | "paragraph"
+}
+
+export interface NotionPage {
+  blocks: NotionBlock[]
   title: string
 }
 
-interface NotionParagraph {
-  segments: NotionRichTextSegment[]
-}
-
-interface NotionRichTextSegment {
+export interface NotionRichTextSegment {
   href: null | string
   text: string
 }
@@ -49,7 +50,7 @@ export async function getNotionPage(): Promise<NotionPage> {
     title = titleArray[0].plain_text
   }
 
-  const blocks: NotionParagraph[] = []
+  const blocks: NotionBlock[] = []
 
   for (const result of metaContent.results) {
     if (!("type" in result)) {
@@ -63,7 +64,30 @@ export async function getNotionPage(): Promise<NotionPage> {
           href: textBlock.href,
           text: textBlock.plain_text,
         }))
-        blocks.push({ segments })
+        blocks.push({ segments, type: "paragraph" })
+      }
+    }
+
+    if (result.type === "heading_1") {
+      const richText = result.heading_1.rich_text
+      if (richText.length > 0) {
+        const segments = richText.map((textBlock) => ({
+          href: textBlock.href,
+          text: textBlock.plain_text,
+        }))
+        // Notion heading_1 is rendered as h2 for this page.
+        blocks.push({ segments, type: "h2" })
+      }
+    }
+
+    if (result.type === "heading_2") {
+      const richText = result.heading_2.rich_text
+      if (richText.length > 0) {
+        const segments = richText.map((textBlock) => ({
+          href: textBlock.href,
+          text: textBlock.plain_text,
+        }))
+        blocks.push({ segments, type: "h3" })
       }
     }
   }
