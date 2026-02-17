@@ -1,5 +1,6 @@
 import { Spacer } from "@nattui/react-components"
 import { NotionBlockContent } from "@/app/(home)/notion-block-content"
+import { NotionRevalidateButton } from "@/app/(home)/notion-revalidate-button"
 import { getNotionPage, type NotionBlock } from "@/lib/notion"
 
 export default async function HomePage() {
@@ -31,6 +32,8 @@ export default async function HomePage() {
           <NotionBlockContent block={block} blockIndex={index} key={index} />
         ))}
       </div>
+
+      <NotionRevalidateButton />
       <Spacer className="h-128" />
     </div>
   )

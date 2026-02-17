@@ -63,6 +63,7 @@
     "eslint/no-ternary": "allow",
     "eslint/no-undef": "allow",
     "eslint/no-undefined": "allow",
+    "eslint/require-await": "allow",
     "eslint/sort-imports": "allow",
     "oxc/no-async-await": "allow",
     "oxc/no-rest-spread-properties": "allow",
