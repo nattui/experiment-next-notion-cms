@@ -4,20 +4,47 @@ const { NOTION_API_KEY, NOTION_PAGE_ID } = process.env
 
 export const notion = new Client({ auth: NOTION_API_KEY })
 
-export async function getNotionPage(): Promise<string[]> {
+interface NotionPage {
+  blocks: string[]
+  title: string
+}
+
+export async function getNotionPage(): Promise<NotionPage> {
   if (!NOTION_API_KEY || !NOTION_PAGE_ID) {
     throw new Error("NOTION_API_KEY and NOTION_PAGE_ID are required")
   }
 
-  const response = await notion.blocks.children.list({
-    block_id: NOTION_PAGE_ID,
-  })
+  const DEFAULT_EMPTY = {
+    blocks: [],
+    title: "",
+  }
+
+  const [metaContent, metaPage] = await Promise.all([
+    notion.blocks.children.list({ block_id: NOTION_PAGE_ID }),
+    notion.pages.retrieve({ page_id: NOTION_PAGE_ID }),
+  ])
+
+  if (!("properties" in metaPage)) {
+    return DEFAULT_EMPTY
+  }
+
+  const titleProperty = metaPage.properties.title
+
+  if (!titleProperty || titleProperty.type !== "title") {
+    return DEFAULT_EMPTY
+  }
+
+  let title = ""
+  const titleArray = titleProperty.title
+  if (titleArray.length > 0) {
+    title = titleArray[0].plain_text
+  }
 
   const blocks: string[] = []
 
-  for (const result of response.results) {
+  for (const result of metaContent.results) {
     if (!("type" in result)) {
-      return []
+      return DEFAULT_EMPTY
     }
 
     if (result.type === "paragraph") {
@@ -29,5 +56,8 @@ export async function getNotionPage(): Promise<string[]> {
     }
   }
 
-  return blocks
+  return {
+    blocks,
+    title,
+  }
 }
