@@ -1,5 +1,6 @@
 // https://www.notion.so/nattwasm/Writings-30ab76f65e6e809e881ff95294eaac61
 
+import { Spacer } from "@nattui/react-components"
 import { Client } from "@notionhq/client"
 
 const { NOTION_API_KEY, NOTION_PAGE_ID } = process.env
@@ -35,11 +36,15 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col">
-      <div className="d flex flex-col gap-y-8">
+      <Spacer className="h-64" />
+      <div className="mx-auto flex max-w-672 flex-col gap-y-24">
         {blocks.map((block, index) => (
-          <p key={index}>{block}</p>
+          <p className="text-16 leading-[1.825]" key={index}>
+            {block}
+          </p>
         ))}
       </div>
+      <Spacer className="h-128" />
     </div>
   )
 }
