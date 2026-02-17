@@ -26,8 +26,13 @@ export interface NotionPage {
 }
 
 export interface NotionRichTextSegment {
+  bold: boolean
+  code: boolean
   href: null | string
+  italic: boolean
+  strikethrough: boolean
   text: string
+  underline: boolean
 }
 
 export async function getNotionPage(): Promise<NotionPage> {
@@ -73,9 +78,15 @@ export async function getNotionPage(): Promise<NotionPage> {
     if (result.type === "paragraph") {
       const richText = result.paragraph.rich_text
       if (richText.length > 0) {
+        console.log(richText)
         const segments = richText.map((textBlock) => ({
+          bold: textBlock.annotations.bold,
+          code: textBlock.annotations.code,
           href: textBlock.href,
+          italic: textBlock.annotations.italic,
+          strikethrough: textBlock.annotations.strikethrough,
           text: textBlock.plain_text,
+          underline: textBlock.annotations.underline,
         }))
         blocks.push({ segments, type: "paragraph" })
       }
@@ -85,8 +96,13 @@ export async function getNotionPage(): Promise<NotionPage> {
       const richText = result.heading_1.rich_text
       if (richText.length > 0) {
         const segments = richText.map((textBlock) => ({
+          bold: textBlock.annotations.bold,
+          code: textBlock.annotations.code,
           href: textBlock.href,
+          italic: textBlock.annotations.italic,
+          strikethrough: textBlock.annotations.strikethrough,
           text: textBlock.plain_text,
+          underline: textBlock.annotations.underline,
         }))
         // Notion heading_1 is rendered as h2 for this page.
         blocks.push({ segments, type: "h2" })
@@ -97,8 +113,13 @@ export async function getNotionPage(): Promise<NotionPage> {
       const richText = result.heading_2.rich_text
       if (richText.length > 0) {
         const segments = richText.map((textBlock) => ({
+          bold: textBlock.annotations.bold,
+          code: textBlock.annotations.code,
           href: textBlock.href,
+          italic: textBlock.annotations.italic,
+          strikethrough: textBlock.annotations.strikethrough,
           text: textBlock.plain_text,
+          underline: textBlock.annotations.underline,
         }))
         blocks.push({ segments, type: "h3" })
       }
