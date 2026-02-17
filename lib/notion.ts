@@ -11,6 +11,11 @@ export type NotionBlock =
       url: string
     }
   | {
+      code: string
+      language: string
+      type: "code"
+    }
+  | {
       segments: NotionRichTextSegment[]
       type: "h2" | "h3" | "paragraph"
     }
@@ -63,6 +68,8 @@ export async function getNotionPage(): Promise<NotionPage> {
       return DEFAULT_EMPTY
     }
 
+    console.log(result.type)
+
     if (result.type === "paragraph") {
       const richText = result.paragraph.rich_text
       if (richText.length > 0) {
@@ -104,6 +111,13 @@ export async function getNotionPage(): Promise<NotionPage> {
       const alt = result.image.caption.map((textBlock) => textBlock.plain_text).join("")
 
       blocks.push({ alt, type: "image", url })
+    }
+
+    if (result.type === "code") {
+      const code = result.code.rich_text.map((textBlock) => textBlock.plain_text).join("")
+      if (code.length > 0) {
+        blocks.push({ code, language: result.code.language, type: "code" })
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import { Spacer } from "@nattui/react-components"
+import { highlight } from "sugar-high"
 import { NotionRichTextSegments } from "@/app/(home)/notion-rich-text-segments"
 import type { NotionBlock } from "@/lib/notion"
 
@@ -55,4 +56,25 @@ export function NotionBlockContent(props: NotionBlockContentProps) {
       </>
     )
   }
+
+  if (block.type === "code") {
+    const codeHTML = highlight(block.code)
+
+    return (
+      <>
+        <pre className="rounded-8 bg-gray-3 text-13 mb-24 overflow-x-auto p-16">
+          <code
+            aria-label={block.language}
+            className="rounded-4 text-14 px-6 py-2 font-mono"
+            // oxlint-disable-next-line react/no-dangerously-set-innerhtml
+            dangerouslySetInnerHTML={{ __html: codeHTML }}
+          />
+        </pre>
+        <Spacer className="h-24" />
+      </>
+    )
+  }
+
+  // oxlint-disable-next-line react/jsx-no-useless-fragment
+  return <></>
 }
