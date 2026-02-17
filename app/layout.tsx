@@ -18,7 +18,11 @@ export default function RootLayout(props: PropsWithChildren) {
 
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} color-gray-mauve color-primary-crimson dark`}
+      >
+        {children}
+      </body>
     </html>
   )
 }
