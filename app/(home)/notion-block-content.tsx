@@ -65,7 +65,6 @@ export function NotionBlockContent(props: NotionBlockContentProps) {
         <pre className="rounded-8 bg-gray-3 text-13 overflow-x-auto p-16">
           <code
             aria-label={block.language}
-            className="rounded-4 text-14 px-6 py-2 font-mono"
             // oxlint-disable-next-line react/no-dangerously-set-innerhtml
             dangerouslySetInnerHTML={{ __html: codeHTML }}
           />
