@@ -1,5 +1,5 @@
 import { evaluate } from "@mdx-js/mdx"
-import { Button, Input, Spacer } from "@nattui/react-components"
+import { Button, Input, Spacer, Switch } from "@nattui/react-components"
 import type { ElementType, JSX } from "react"
 import { Fragment, jsx, jsxs } from "react/jsx-runtime"
 import { highlight } from "sugar-high"
@@ -66,7 +66,7 @@ export async function NotionBlockContent(props: NotionBlockContentProps): Promis
     if (mappedComponentElements) {
       return (
         <>
-          <div className="rounded-12 bg-gray-2 border-gray-4 flex flex-wrap justify-center gap-16 border p-16">
+          <div className="rounded-12 bg-gray-2 border-gray-4 flex flex-wrap items-center justify-center gap-16 border p-16">
             {mappedComponentElements}
           </div>
           <Spacer className="h-24" />
@@ -95,6 +95,7 @@ const components: Record<string, ElementType> = {
   Button,
   Input,
   Spacer,
+  Switch,
 }
 
 async function renderMappedComponents(code: string): Promise<JSX.Element | undefined> {

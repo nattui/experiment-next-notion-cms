@@ -36,11 +36,24 @@ export interface NotionRichTextSegment {
   underline: boolean
 }
 
+interface NotionRichTextInput {
+  annotations: {
+    bold: boolean
+    code: boolean
+    italic: boolean
+    strikethrough: boolean
+    underline: boolean
+  }
+  href: null | string
+  plain_text: string
+}
+
 export async function getNotionPage(): Promise<NotionPage> {
   if (!NOTION_API_KEY || !NOTION_PAGE_ID) {
     throw new Error("NOTION_API_KEY and NOTION_PAGE_ID are required")
   }
 
+  // Keep a stable fallback when page metadata is missing or unexpected.
   const DEFAULT_EMPTY = {
     blocks: [],
     createdTime: "",
@@ -70,58 +83,38 @@ export async function getNotionPage(): Promise<NotionPage> {
 
   const blocks: NotionBlock[] = []
 
+  // Shared paragraph/heading handler: skip empty text and normalize segment shape.
+  function pushRichTextBlock(
+    richText: NotionRichTextInput[],
+    type: Extract<NotionBlock, { segments: NotionRichTextSegment[] }>["type"],
+  ): void {
+    if (richText.length === 0) {
+      return
+    }
+
+    blocks.push({
+      segments: toNotionRichTextSegments(richText),
+      type,
+    })
+  }
+
+  // Convert Notion API blocks into the small renderable union used by the UI.
   for (const result of metaContent.results) {
     if (!("type" in result)) {
       return DEFAULT_EMPTY
     }
 
     if (result.type === "paragraph") {
-      const richText = result.paragraph.rich_text
-      if (richText.length > 0) {
-        const segments = richText.map((textBlock) => ({
-          bold: textBlock.annotations.bold,
-          code: textBlock.annotations.code,
-          href: textBlock.href,
-          italic: textBlock.annotations.italic,
-          strikethrough: textBlock.annotations.strikethrough,
-          text: textBlock.plain_text,
-          underline: textBlock.annotations.underline,
-        }))
-        blocks.push({ segments, type: "paragraph" })
-      }
+      pushRichTextBlock(result.paragraph.rich_text, "paragraph")
     }
 
     if (result.type === "heading_1") {
-      const richText = result.heading_1.rich_text
-      if (richText.length > 0) {
-        const segments = richText.map((textBlock) => ({
-          bold: textBlock.annotations.bold,
-          code: textBlock.annotations.code,
-          href: textBlock.href,
-          italic: textBlock.annotations.italic,
-          strikethrough: textBlock.annotations.strikethrough,
-          text: textBlock.plain_text,
-          underline: textBlock.annotations.underline,
-        }))
-        // Notion heading_1 is rendered as h2 for this page.
-        blocks.push({ segments, type: "h2" })
-      }
+      // Notion heading_1 is rendered as h2 for this page.
+      pushRichTextBlock(result.heading_1.rich_text, "h2")
     }
 
     if (result.type === "heading_2") {
-      const richText = result.heading_2.rich_text
-      if (richText.length > 0) {
-        const segments = richText.map((textBlock) => ({
-          bold: textBlock.annotations.bold,
-          code: textBlock.annotations.code,
-          href: textBlock.href,
-          italic: textBlock.annotations.italic,
-          strikethrough: textBlock.annotations.strikethrough,
-          text: textBlock.plain_text,
-          underline: textBlock.annotations.underline,
-        }))
-        blocks.push({ segments, type: "h3" })
-      }
+      pushRichTextBlock(result.heading_2.rich_text, "h3")
     }
 
     if (result.type === "image") {
@@ -146,4 +139,17 @@ export async function getNotionPage(): Promise<NotionPage> {
     createdTime: metaPage.created_time,
     title,
   }
+}
+
+// Map Notion rich text objects to the formatting fields consumed by components.
+function toNotionRichTextSegments(richText: NotionRichTextInput[]): NotionRichTextSegment[] {
+  return richText.map((textBlock) => ({
+    bold: textBlock.annotations.bold,
+    code: textBlock.annotations.code,
+    href: textBlock.href,
+    italic: textBlock.annotations.italic,
+    strikethrough: textBlock.annotations.strikethrough,
+    text: textBlock.plain_text,
+    underline: textBlock.annotations.underline,
+  }))
 }
