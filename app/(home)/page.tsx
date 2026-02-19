@@ -1,6 +1,5 @@
 import { Spacer } from "@nattui/react-components"
 import { NotionBlockContent } from "@/app/(home)/notion-block-content"
-import { NotionRevalidateButton } from "@/app/(home)/notion-revalidate-button"
 import { getNotionPage, type NotionBlock } from "@/lib/notion"
 
 export default async function HomePage() {
