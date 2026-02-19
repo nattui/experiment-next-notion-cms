@@ -17,8 +17,6 @@ export async function POST(request: Request): Promise<Response> {
       { status: 500 },
     )
   }
-  const jsonBody = await request.json()
-  console.log("jsonBody", jsonBody)
 
   const rawBody = await request.text()
   console.log("rawBody", rawBody)
