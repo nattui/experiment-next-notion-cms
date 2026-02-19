@@ -19,21 +19,21 @@
     "@nattui/tailwind-colors": "0.0.8",
     "@nattui/tailwind-exact": "0.0.5",
     "@notionhq/client": "5.9.0",
-    "lucide-react": "0.566.0",
+    "lucide-react": "0.574.0",
     "next": "16.1.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "sugar-high": "^0.9.5"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "4.1.18",
-    "@types/node": "25.2.3",
+    "@tailwindcss/postcss": "4.2.0",
+    "@types/node": "25.3.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "eslint-plugin-perfectionist": "5.5.0",
+    "eslint-plugin-perfectionist": "5.6.0",
     "oxfmt": "0.33.0",
     "oxlint": "1.47.0",
-    "tailwindcss": "4.1.18",
+    "tailwindcss": "4.2.0",
     "typescript": "5.9.3"
   },
   "ignoreScripts": [
