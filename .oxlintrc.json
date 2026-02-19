@@ -14,6 +14,10 @@
   ],
   "jsPlugins": [
     {
+      "name": "unused-imports",
+      "specifier": "eslint-plugin-unused-imports"
+    },
+    {
       "name": "perfectionist",
       "specifier": "eslint-plugin-perfectionist"
     }
@@ -90,7 +94,8 @@
     "typescript/explicit-module-boundary-types": "allow",
     "typescript/no-empty-interface": "allow",
     "typescript/no-empty-object-type": "allow",
-    "typescript/no-use-before-define": "allow"
+    "typescript/no-use-before-define": "allow",
+    "unused-imports/no-unused-imports": "error"
   },
   "settings": {
     "jsx-a11y": {
