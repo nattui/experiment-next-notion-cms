@@ -4,6 +4,7 @@ import { getNotionPage, type NotionBlock } from "@/lib/notion"
 
 export default async function HomePage() {
   const { blocks, createdTime, title } = await getNotionPage()
+
   const formattedCreatedTime = new Intl.DateTimeFormat("en-US", {
     dateStyle: "long",
     timeZone: "UTC",
