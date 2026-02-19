@@ -33,6 +33,7 @@
     "eslint-plugin-import/group-exports": "allow",
     "eslint-plugin-import/no-default-export": "allow",
     "eslint-plugin-import/no-named-export": "allow",
+    "eslint-plugin-import/no-nodejs-modules": "allow",
     "eslint-plugin-import/no-unassigned-import": "allow",
     "eslint-plugin-import/prefer-default-export": "allow",
     "eslint-plugin-import/unambiguous": "allow",
