@@ -8,6 +8,12 @@ interface NotionWebhookPayload {
   verification_token: string
 }
 
+/**
+ * Handles Notion webhook requests and revalidates "/" when token validation passes.
+ *
+ * @param {Request} request Incoming webhook request.
+ * @returns {Promise<Response>} A JSON response for success or validation failure.
+ */
 export async function POST(request: Request): Promise<Response> {
   if (!NOTION_WEBHOOK_VERIFICATION_TOKEN) {
     return Response.json(
