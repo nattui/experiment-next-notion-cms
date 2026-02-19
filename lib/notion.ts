@@ -2,7 +2,10 @@ import { Client } from "@notionhq/client"
 
 const { NOTION_API_KEY, NOTION_PAGE_ID } = process.env
 
-export const notion = new Client({ auth: NOTION_API_KEY })
+export const notion = new Client({
+  auth: NOTION_API_KEY,
+  notionVersion: "2025-09-03",
+})
 
 export type NotionBlock =
   | {
