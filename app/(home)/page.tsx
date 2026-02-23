@@ -1,4 +1,4 @@
-import { Spacer } from "@nattui/react-components"
+import { Column, Spacer } from "@nattui/react-components"
 import { NotionBlockContent } from "@/app/(home)/notion-block-content"
 import { NotionRevalidateButton } from "@/app/(home)/notion-revalidate-button"
 import { getNotionPage, type NotionBlock } from "@/lib/notion"
@@ -12,16 +12,16 @@ export default async function HomePage() {
   }).format(new Date(createdTime))
 
   return (
-    <div className="flex flex-col px-16">
-      <Spacer className="h-64" />
+    <Column className="px-16">
+      <Spacer height={64} />
 
       <NotionRevalidateButton />
-      <Spacer className="h-12" />
+      <Spacer height={12} />
 
-      <div className="mx-auto flex max-w-[620px] flex-col">
+      <Column className="mx-auto max-w-[620px]">
         {/* Title */}
         <h1 className="text-36 font-500 leading-[1.2]">{title}</h1>
-        <Spacer className="h-12" />
+        <Spacer height={12} />
 
         {/* Created Time */}
         <p className="text-gray-11 text-14 flex items-center gap-x-8">
@@ -29,15 +29,15 @@ export default async function HomePage() {
           <span>·</span>
           <span>Natt Nguyen</span>
         </p>
-        <Spacer className="h-24" />
+        <Spacer height={24} />
 
         {/* Content */}
         {blocks.map((block: NotionBlock, index) => (
           <NotionBlockContent block={block} blockIndex={index} key={index} />
         ))}
-      </div>
+      </Column>
 
-      <Spacer className="h-128" />
-    </div>
+      <Spacer height={128} />
+    </Column>
   )
 }
